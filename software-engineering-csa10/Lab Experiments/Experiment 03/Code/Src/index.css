@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", sans-serif;
+  --color-primary: #164f46;
+  --color-ink: #172421;
+  --color-muted: #72807c;
+  --color-canvas: #f6f7f3;
+  --color-stage: #e7ebe6;
+  --color-line: #e4e8e3;
+  --color-mint: #bfe6d8;
+  --color-sage: #dfe8df;
+  --color-coral: #e66b55;
+  --color-gold: #e3a72f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-stage);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--color-canvas);
+  box-shadow: 0 0 60px rgb(23 36 33 / 12%);
+}
+
+.icon-button {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: 999px;
+  background: white;
+  color: var(--color-ink);
+  box-shadow: 0 1px 4px rgb(23 36 33 / 7%);
+}
+
+.primary-button,
+.secondary-button {
+  width: 100%;
+  border-radius: 1rem;
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.primary-button {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 8px 24px rgb(22 79 70 / 18%);
+}
+
+.secondary-button {
+  border: 1px solid var(--color-line);
+  background: white;
+  color: var(--color-ink);
+}
+
+.primary-button:active,
+.secondary-button:active,
+button:active {
+  transform: scale(0.98);
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .app-shell {
+    border-right: 1px solid var(--color-line);
+    border-left: 1px solid var(--color-line);
+  }
+}
