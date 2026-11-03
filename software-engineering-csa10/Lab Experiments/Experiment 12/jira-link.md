@@ -1,6 +1,6 @@
 # Jira Board Overview
 
-**Board URL:** [Saveetha Team - TMS Board](https://saveetha-team-ov1zj1lt.atlassian.net/jira/software/projects/TMS/boards/35?filter=&groupBy=none)
+**Board URL:** [TMS Board](https://saveetha-team-ov1zj1lt.atlassian.net/jira/software/projects/TMS/boards/35?filter=&groupBy=none)
 
 ---
 
@@ -17,7 +17,3 @@
 * 📈 **[Project Settings](https://saveetha-team-ov1zj1lt.atlassian.net/jira/software/projects/TMS/settings)**
 
 ---
-
-## 📝 Notes & Tasks
-- [ ] Review sprint backlog items in Jira.
-- [ ] Link relevant commits/issues to this documentation.
