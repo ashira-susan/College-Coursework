@@ -1,0 +1,27 @@
+digraph {
+	dpi=150 fontname=Helvetica fontsize=18 label="Experiment 4 - Length of a String (RAPTOR-style flowchart)" labelloc=t nodesep=0.5 rankdir=TB ranksep=0.45
+	node [fontname=Helvetica fontsize=12]
+	edge [fontname=Helvetica fontsize=11]
+	s [label=Start fillcolor="#fde9a9" shape=ellipse style=filled]
+	in [label="Input s
+(prompt: Enter a string)" fillcolor="#cfe8ff" shape=parallelogram style=filled]
+	c [label="count <- 0" fillcolor="#e6e6e6" shape=box style=filled]
+	i [label="i <- 1" fillcolor="#e6e6e6" shape=box style=filled]
+	n [label="n <- Length_Of(s)" fillcolor="#e6e6e6" shape=box style=filled]
+	d [label="i <= n ?" fillcolor="#ffd6d6" shape=diamond style=filled]
+	inc [label="count <- count + 1" fillcolor="#e6e6e6" shape=box style=filled]
+	ii [label="i <- i + 1" fillcolor="#e6e6e6" shape=box style=filled]
+	o [label="Output
+\"Length of string = \" + count" fillcolor="#cfe8ff" shape=parallelogram style=filled]
+	e [label=End fillcolor="#fde9a9" shape=ellipse style=filled]
+	s -> in
+	in -> c
+	c -> i
+	i -> n
+	n -> d
+	inc -> ii
+	o -> e
+	d -> inc [label=Yes]
+	ii -> d
+	d -> o [label=No]
+}
