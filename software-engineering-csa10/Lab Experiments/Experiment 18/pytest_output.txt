@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /usr/bin/python3
+rootdir: /home/claude/devops-lab/Exp18-Jenkins-CICD-Docker
+plugins: platformdirs-4.13.0
+collecting ... collected 3 items
+
+tests/test_app.py::test_home PASSED                                      [ 33%]
+tests/test_app.py::test_health PASSED                                    [ 66%]
+tests/test_app.py::test_add PASSED                                       [100%]
+
+============================== 3 passed ===============================

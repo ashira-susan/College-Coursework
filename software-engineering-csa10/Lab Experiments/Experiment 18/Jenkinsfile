@@ -1,0 +1,87 @@
+pipeline {
+    agent any
+
+    environment {
+        // change <dockerhub-username> to your Docker Hub username
+        DOCKERHUB_USER = '<dockerhub-username>'
+        IMAGE_NAME     = "${DOCKERHUB_USER}/flask-cicd-demo"
+        IMAGE_TAG      = "${BUILD_NUMBER}"
+        CONTAINER_NAME = 'flask-cicd-demo'
+        // Jenkins credentials ID (Username with password: Docker Hub user + access token)
+        DOCKERHUB_CREDS = 'dockerhub-creds'
+    }
+
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                sh 'ls -la'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                // builds only the "test" stage - pipeline fails here if a test fails
+                sh 'docker build --target test -t ${IMAGE_NAME}:test .'
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                sh '''
+                    docker build --target final \
+                        --build-arg APP_VERSION=${IMAGE_TAG} \
+                        -t ${IMAGE_NAME}:${IMAGE_TAG} \
+                        -t ${IMAGE_NAME}:latest .
+                '''
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDS}",
+                                                  usernameVariable: 'DH_USER',
+                                                  passwordVariable: 'DH_TOKEN')]) {
+                    sh '''
+                        echo "$DH_TOKEN" | docker login -u "$DH_USER" --password-stdin
+                        docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                        docker push ${IMAGE_NAME}:latest
+                        docker logout
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker rm -f ${CONTAINER_NAME} || true
+                    docker run -d --name ${CONTAINER_NAME} -p 5000:5000 ${IMAGE_NAME}:${IMAGE_TAG}
+                    sleep 5
+                '''
+            }
+        }
+
+        stage('Smoke Test') {
+            steps {
+                // run the check inside the container (works even when Jenkins itself runs in Docker)
+                sh '''
+                    docker exec ${CONTAINER_NAME} python -c \
+                      "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/health').read().decode())"
+                '''
+            }
+        }
+    }
+
+    post {
+        success { echo "Pipeline SUCCESS - ${IMAGE_NAME}:${IMAGE_TAG} deployed at http://localhost:5000" }
+        failure { echo 'Pipeline FAILED - check the stage logs above' }
+        always  { sh 'docker image prune -f || true' }
+    }
+}

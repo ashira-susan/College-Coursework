@@ -1,0 +1,15 @@
+# Starts Jenkins on http://localhost:8081 (lab setup only: runs as root with the Docker socket mounted)
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    user: root
+    ports:
+      - "8081:8080"      # Jenkins UI
+      - "50000:50000"    # agent port
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+volumes:
+  jenkins_home:
