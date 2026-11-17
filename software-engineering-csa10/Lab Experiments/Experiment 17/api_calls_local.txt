@@ -1,0 +1,10 @@
+$ curl -s http://localhost:5057/
+{"message":"Flask API running in Docker / Kubernetes","served_by":"vm","version":"1.0"}
+$ curl -s http://localhost:5057/health
+{"status":"UP"}
+$ curl -s http://localhost:5057/api/students
+[{"department":"AI & Data Science","id":1,"name":"Asha"},{"department":"Computer Science","id":2,"name":"Ravi"}]
+$ curl -s -X POST -H "Content-Type: application/json" -d "{\"name\":\"Meena\",\"department\":\"IT\"}" http://localhost:5057/api/students
+{"department":"IT","id":3,"name":"Meena"}
+$ curl -s http://localhost:5057/api/students/99
+{"error":"student not found"}

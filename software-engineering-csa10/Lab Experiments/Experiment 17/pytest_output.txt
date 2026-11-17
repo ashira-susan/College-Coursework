@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/claude/devops-lab/Exp17-Flask-API-Docker-Kubernetes
+plugins: platformdirs-4.13.0
+collecting ... collected 5 items
+
+tests/test_app.py::test_home PASSED                                      [ 20%]
+tests/test_app.py::test_health PASSED                                    [ 40%]
+tests/test_app.py::test_list_students PASSED                             [ 60%]
+tests/test_app.py::test_add_and_delete_student PASSED                    [ 80%]
+tests/test_app.py::test_validation PASSED                                [100%]
+
+============================== 5 passed ===============================
