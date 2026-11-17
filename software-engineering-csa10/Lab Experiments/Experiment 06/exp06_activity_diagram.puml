@@ -1,0 +1,42 @@
+@startuml
+title Online Food Delivery System - Activity Diagram (Order to Delivery)
+skinparam shadowing false
+|Customer|
+start
+:Login / Register;
+:Search and select restaurant;
+:Browse menu and add items to cart;
+:Review cart and place order;
+|System|
+:Create order and show payment page;
+|Customer|
+:Choose payment method and pay;
+|System|
+if (Payment successful?) then (yes)
+  :Notify restaurant of new order;
+  |Restaurant|
+  if (Accept order?) then (yes)
+    :Prepare food;
+    :Mark order "Ready for pickup";
+    |System|
+    :Assign nearest delivery agent;
+    |Delivery Agent|
+    :Pick up order from restaurant;
+    :Deliver to customer address;
+    |Customer|
+    :Receive order and confirm delivery;
+    :Rate and review (optional);
+    |System|
+    :Close order and settle payment;
+  else (no)
+    |System|
+    :Cancel order;
+    :Refund payment to customer;
+  endif
+else (no)
+  |System|
+  :Show payment failed message;
+  :Mark order "Failed";
+endif
+stop
+@enduml

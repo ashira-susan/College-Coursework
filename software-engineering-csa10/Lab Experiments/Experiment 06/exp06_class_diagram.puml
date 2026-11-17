@@ -1,0 +1,91 @@
+@startuml
+title Online Food Delivery System - Class Diagram
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+
+class Customer {
+  - customerId : int
+  - name : String
+  - email : String
+  - phone : String
+  + register() : void
+  + login() : boolean
+  + browseRestaurants() : List<Restaurant>
+  + placeOrder(cart : Cart) : Order
+  + trackOrder(orderId : int) : String
+}
+class Address {
+  - street : String
+  - city : String
+  - pincode : String
+}
+class Restaurant {
+  - restaurantId : int
+  - name : String
+  - cuisine : String
+  - rating : float
+  + addMenuItem(item : MenuItem) : void
+  + acceptOrder(o : Order) : void
+  + updateOrderStatus(o : Order, s : String) : void
+}
+class MenuItem {
+  - itemId : int
+  - name : String
+  - price : double
+  - available : boolean
+}
+class Cart {
+  - cartId : int
+  + addItem(item : MenuItem, qty : int) : void
+  + removeItem(item : MenuItem) : void
+  + getTotal() : double
+}
+class Order {
+  - orderId : int
+  - orderDate : Date
+  - status : String
+  - totalAmount : double
+  + calculateTotal() : double
+  + cancel() : void
+}
+class OrderItem {
+  - quantity : int
+  - subTotal : double
+}
+class Payment {
+  - paymentId : int
+  - method : String
+  - amount : double
+  - status : String
+  + processPayment() : boolean
+  + refund() : void
+}
+class DeliveryAgent {
+  - agentId : int
+  - name : String
+  - vehicleNo : String
+  - available : boolean
+  + acceptDelivery(d : Delivery) : void
+  + updateLocation() : void
+}
+class Delivery {
+  - deliveryId : int
+  - pickupTime : Date
+  - deliveredTime : Date
+  - status : String
+  + assignAgent(a : DeliveryAgent) : void
+  + markDelivered() : void
+}
+
+Customer "1" -- "1..*" Address : has
+Customer "1" -- "0..*" Order : places
+Customer "1" -- "1" Cart : owns
+Cart "1" o-- "0..*" MenuItem : contains
+Restaurant "1" *-- "1..*" MenuItem : offers
+Restaurant "1" -- "0..*" Order : receives
+Order "1" *-- "1..*" OrderItem : consists of
+OrderItem "*" --> "1" MenuItem : refers to
+Order "1" -- "1" Payment : paid by
+Order "1" -- "1" Delivery : fulfilled by
+DeliveryAgent "1" -- "0..*" Delivery : handles
+@enduml

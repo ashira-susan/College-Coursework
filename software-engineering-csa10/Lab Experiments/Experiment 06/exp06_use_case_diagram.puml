@@ -1,0 +1,56 @@
+@startuml
+title Online Food Delivery System - Use Case Diagram
+left to right direction
+skinparam shadowing false
+actor Customer
+actor "Restaurant Owner" as Owner
+actor "Delivery Agent" as Agent
+actor Admin
+actor "Payment Gateway" as PG <<system>>
+
+rectangle "Online Food Delivery System" {
+  usecase "Register / Login" as UC1
+  usecase "Search Restaurants & Food" as UC2
+  usecase "View Menu" as UC3
+  usecase "Add Items to Cart" as UC4
+  usecase "Place Order" as UC5
+  usecase "Make Payment" as UC6
+  usecase "Track Order" as UC7
+  usecase "Rate & Review" as UC8
+  usecase "Cancel Order" as UC9
+  usecase "Manage Menu" as UC10
+  usecase "Accept / Reject Order" as UC11
+  usecase "Update Order Status" as UC12
+  usecase "Accept Delivery" as UC13
+  usecase "Update Delivery Status" as UC14
+  usecase "Manage Users & Restaurants" as UC15
+  usecase "Generate Reports" as UC16
+  usecase "Apply Coupon" as UC17
+  usecase "Verify Payment" as UC18
+}
+
+Customer --> UC1
+Customer --> UC2
+Customer --> UC4
+Customer --> UC5
+Customer --> UC7
+Customer --> UC8
+Customer --> UC9
+Owner --> UC1
+Owner --> UC10
+Owner --> UC11
+Owner --> UC12
+Agent --> UC1
+Agent --> UC13
+Agent --> UC14
+Admin --> UC15
+Admin --> UC16
+PG --> UC18
+
+UC2 ..> UC3 : <<include>>
+UC5 ..> UC4 : <<include>>
+UC5 ..> UC6 : <<include>>
+UC6 ..> UC18 : <<include>>
+UC17 ..> UC5 : <<extend>>
+UC9 ..> UC5 : <<extend>>
+@enduml
