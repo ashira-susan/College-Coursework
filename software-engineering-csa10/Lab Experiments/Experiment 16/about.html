@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Docker + Nginx</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>About this project</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Stack</h2>
+      <p>HTML + CSS + JavaScript, packaged with Docker, served by Nginx.</p>
+      <h2>Build and run</h2>
+      <pre>docker build -t static-website:1.0 .
+docker run -d -p 8080:80 --name static-site static-website:1.0</pre>
+    </section>
+  </main>
+  <footer>Experiment 16 &middot; Ashira Bridget Susan S &middot; SIMATS Engineering</footer>
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Static Website on Docker + Nginx</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Static Website served by Nginx in Docker</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>It works!</h2>
+      <p>This page is served from an <strong>nginx:alpine</strong> container built with a custom Dockerfile.</p>
+      <p id="clock">Loading time...</p>
+      <button id="themeBtn">Toggle theme</button>
+    </section>
+
+    <section class="card">
+      <h2>What this experiment shows</h2>
+      <ul>
+        <li>Packaging static files (HTML, CSS, JS) into a Docker image</li>
+        <li>Running the image as a container</li>
+        <li>Mapping container port 80 to host port 8080</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>Experiment 16 &middot; Ashira Bridget Susan S &middot; SIMATS Engineering</footer>
+  <script src="js/script.js"></script>
+</body>
+</html>

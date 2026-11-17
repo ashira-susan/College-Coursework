@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .
+    image: static-website:1.0
+    container_name: static-site
+    ports:
+      - "8080:80"
+    restart: unless-stopped
