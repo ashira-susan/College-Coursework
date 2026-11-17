@@ -1,0 +1,8 @@
+============================================
+ Hello from a container pulled from Docker Hub!
+============================================
+Container hostname : vm
+Python version     : 3.12.3
+OS / architecture  : Linux x86_64
+Image version      : dev
+Time (UTC)         : 2026-11-17 08:56:49
