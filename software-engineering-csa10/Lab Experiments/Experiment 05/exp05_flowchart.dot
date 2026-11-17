@@ -1,0 +1,43 @@
+digraph {
+	dpi=150 fontname=Helvetica fontsize=18 label="Experiment 5 - Lexicographically Smallest String by One Swap (RAPTOR-style flowchart)" labelloc=t nodesep=0.5 rankdir=TB ranksep=0.45
+	node [fontname=Helvetica fontsize=12]
+	edge [fontname=Helvetica fontsize=11]
+	s [label=Start fillcolor="#fde9a9" shape=ellipse style=filled]
+	in [label="Input s" fillcolor="#cfe8ff" shape=parallelogram style=filled]
+	n [label="n <- Length_Of(s)" fillcolor="#e6e6e6" shape=box style=filled]
+	i [label="i <- 1" fillcolor="#e6e6e6" shape=box style=filled]
+	d1 [label="i < n ?" fillcolor="#ffd6d6" shape=diamond style=filled]
+	mp [label="minpos <- i + 1
+j <- i + 2" fillcolor="#e6e6e6" shape=box style=filled]
+	d2 [label="j <= n ?" fillcolor="#ffd6d6" shape=diamond style=filled]
+	d3 [label="Substring(s,j,1) <=
+Substring(s,minpos,1) ?" fillcolor="#ffd6d6" shape=diamond style=filled]
+	setmin [label="minpos <- j" fillcolor="#e6e6e6" shape=box style=filled]
+	jj [label="j <- j + 1" fillcolor="#e6e6e6" shape=box style=filled]
+	d4 [label="Substring(s,minpos,1) <
+Substring(s,i,1) ?" fillcolor="#ffd6d6" shape=diamond style=filled]
+	sw [label="Swap characters at
+positions i and minpos
+(rebuild s with Substring)" fillcolor="#e6e6e6" shape=box style=filled]
+	ii [label="i <- i + 1" fillcolor="#e6e6e6" shape=box style=filled]
+	o [label="Output s" fillcolor="#cfe8ff" shape=parallelogram style=filled]
+	e [label=End fillcolor="#fde9a9" shape=ellipse style=filled]
+	s -> in
+	in -> n
+	n -> i
+	i -> d1
+	mp -> d2
+	setmin -> jj
+	sw -> o
+	o -> e
+	d1 -> mp [label=Yes]
+	d1 -> o [label=No]
+	d2 -> d3 [label=Yes]
+	d3 -> setmin [label=Yes]
+	d3 -> jj [label=No]
+	jj -> d2
+	d2 -> d4 [label=No]
+	d4 -> sw [label=Yes]
+	d4 -> ii [label=No]
+	ii -> d1
+}

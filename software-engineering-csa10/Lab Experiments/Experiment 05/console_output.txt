@@ -1,0 +1,13 @@
+Experiment 5: Lexicographically smallest string (one swap)
+----------------------------------------------------------
+Input     Output    Brute-force check
+dcba      acbd      match
+abcd      abcd      match
+bab       abb       match
+cbaa      abac      match
+zyx       xyz       match
+hello     ehllo     match
+banana    aananb    match
+a         a         match
+
+All test cases verified against brute force.
