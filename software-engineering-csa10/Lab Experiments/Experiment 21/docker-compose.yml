@@ -1,0 +1,12 @@
+services:
+  todo:
+    build: .
+    image: flask-todo:1.0
+    container_name: flask-todo
+    ports:
+      - "5000:5000"
+    volumes:
+      - todo_data:/data
+    restart: unless-stopped
+volumes:
+  todo_data:

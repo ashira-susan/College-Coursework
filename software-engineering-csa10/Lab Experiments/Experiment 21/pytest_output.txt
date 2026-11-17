@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /usr/bin/python3
+rootdir: /home/claude/devops-lab/Exp21-Flask-ToDo-Docker
+plugins: platformdirs-4.13.0
+collecting ... collected 4 items
+
+tests/test_todo.py::test_empty_list PASSED                               [ 25%]
+tests/test_todo.py::test_add_toggle_delete PASSED                        [ 50%]
+tests/test_todo.py::test_blank_title_ignored PASSED                      [ 75%]
+tests/test_todo.py::test_home_and_health PASSED                          [100%]
+
+============================== 4 passed ===============================
