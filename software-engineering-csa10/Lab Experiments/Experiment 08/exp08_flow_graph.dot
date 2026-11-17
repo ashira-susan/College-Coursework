@@ -1,0 +1,27 @@
+digraph {
+	dpi=150 fontname=Helvetica fontsize=18 label="Experiment 8 - Flow Graph  (N = 7, E = 8, V(G) = 3)" labelloc=t nodesep=0.7 rankdir=TB ranksep=0.55
+	node [fillcolor="#cfe8ff" fixedsize=true fontname=Helvetica fontsize=14 shape=circle style=filled width=0.5]
+	edge [fontname=Helvetica fontsize=11]
+	1 [label=1]
+	2 [label=2]
+	3 [label=3]
+	4 [label=4]
+	5 [label=5]
+	6 [label=6]
+	7 [label=7]
+	c1 [label="1: total=0; i=1" fixedsize=false fontsize=10 shape=plaintext style=""]
+	1 -> 2 [label=""]
+	2 -> 3 [label=T]
+	2 -> 7 [label=F]
+	3 -> 4 [label=T]
+	3 -> 5 [label=F]
+	4 -> 6 [label=""]
+	5 -> 6 [label=""]
+	6 -> 2 [label=""]
+	legend [label="Regions: R1 = {2,3,4,6}  R2 = {2,3,5,6}  R3 = outside
+Predicate nodes: 2 (while), 3 (if)" fixedsize=false fontsize=11 shape=plaintext style=""]
+	7 -> legend [style=invis]
+	c1 [label="" style=invis]
+	c1 [shape=point width=0]
+	c1 -> 1 [style=invis]
+}
