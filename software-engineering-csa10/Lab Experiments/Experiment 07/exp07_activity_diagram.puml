@@ -1,0 +1,47 @@
+@startuml
+title College Security Management System - Activity Diagram (Campus Entry)
+skinparam shadowing false
+|Person|
+start
+:Arrive at campus gate;
+if (Student / Staff?) then (yes)
+  :Swipe access card;
+  |System|
+  :Read card and look up record;
+  if (Card valid and active?) then (yes)
+    :Log entry in AccessLog;
+    :Open gate;
+    |Person|
+    :Enter campus;
+  else (no)
+    |Security Guard|
+    :Deny entry and check ID manually;
+    if (Identity confirmed?) then (yes)
+      :Allow entry and log manual override;
+    else (no)
+      :Refuse entry;
+      :Report incident;
+      |System|
+      :Trigger alert to Admin;
+    endif
+  endif
+else (no - visitor)
+  |Security Guard|
+  :Register visitor details and purpose;
+  :Contact person to meet;
+  if (Approved?) then (yes)
+    :Issue visitor pass;
+    |System|
+    :Log entry with in-time;
+    |Person|
+    :Enter campus;
+    :Return pass at exit;
+    |System|
+    :Log out-time;
+  else (no)
+    |Security Guard|
+    :Refuse entry;
+  endif
+endif
+stop
+@enduml

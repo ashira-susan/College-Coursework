@@ -1,0 +1,100 @@
+@startuml
+title College Security Management System - Class Diagram
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+
+abstract class Person {
+  # personId : int
+  # name : String
+  # phone : String
+  + getDetails() : String
+}
+class Student {
+  - rollNo : String
+  - department : String
+  - year : int
+}
+class Staff {
+  - empId : String
+  - designation : String
+  - department : String
+}
+class Visitor {
+  - purpose : String
+  - personToMeet : String
+  - inTime : Date
+  - outTime : Date
+  + registerVisit() : void
+  + checkOut() : void
+}
+class SecurityGuard {
+  - guardId : int
+  - shift : String
+  + verifyEntry(p : Person) : boolean
+  + logEntry(g : Gate, p : Person) : void
+  + reportIncident(i : Incident) : void
+}
+class Admin {
+  - adminId : int
+  - username : String
+  + issueCard(p : Person) : AccessCard
+  + blockCard(c : AccessCard) : void
+  + assignGuard(g : SecurityGuard, gate : Gate) : void
+  + generateReport() : void
+}
+class AccessCard {
+  - cardId : String
+  - issueDate : Date
+  - expiryDate : Date
+  - active : boolean
+  + isValid() : boolean
+  + deactivate() : void
+}
+class Gate {
+  - gateId : int
+  - location : String
+  + openGate() : void
+  + closeGate() : void
+}
+class AccessLog {
+  - logId : int
+  - timestamp : Date
+  - direction : String
+  - result : String
+}
+class Incident {
+  - incidentId : int
+  - description : String
+  - severity : String
+  - reportedOn : Date
+  - status : String
+  + escalate() : void
+  + close() : void
+}
+class Camera {
+  - cameraId : int
+  - location : String
+  - recording : boolean
+  + startRecording() : void
+  + captureImage() : void
+}
+class Alarm {
+  - alarmId : int
+  - type : String
+  + trigger() : void
+  + reset() : void
+}
+
+Person <|-- Student
+Person <|-- Staff
+Person <|-- Visitor
+Person "1" -- "0..1" AccessCard : holds
+Admin "1" -- "0..*" AccessCard : issues
+Admin "1" -- "0..*" SecurityGuard : manages
+SecurityGuard "1..*" -- "1" Gate : monitors
+Gate "1" -- "0..*" AccessLog : records
+AccessLog "*" -- "1" Person : about
+SecurityGuard "1" -- "0..*" Incident : reports
+Gate "1" o-- "0..*" Camera : covered by
+Incident "0..*" -- "0..1" Alarm : raises
+@enduml

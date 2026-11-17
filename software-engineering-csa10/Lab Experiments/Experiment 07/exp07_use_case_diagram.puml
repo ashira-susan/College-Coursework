@@ -1,0 +1,47 @@
+@startuml
+title College Security Management System - Use Case Diagram
+left to right direction
+skinparam shadowing false
+actor "Student / Staff" as User
+actor Visitor
+actor "Security Guard" as Guard
+actor Admin
+
+rectangle "College Security Management System" {
+  usecase "Swipe Access Card" as UC1
+  usecase "Verify Identity & Card" as UC2
+  usecase "Register Visitor" as UC3
+  usecase "Issue Visitor Pass" as UC4
+  usecase "Log Entry / Exit" as UC5
+  usecase "Monitor CCTV" as UC6
+  usecase "Report Incident" as UC7
+  usecase "Trigger Alarm" as UC8
+  usecase "Issue / Renew Access Card" as UC9
+  usecase "Block Lost Card" as UC10
+  usecase "Manage Guards & Shifts" as UC11
+  usecase "View Access Logs" as UC12
+  usecase "Generate Security Reports" as UC13
+  usecase "Report Lost Card" as UC14
+}
+
+User --> UC1
+User --> UC14
+Visitor --> UC3
+Guard --> UC2
+Guard --> UC5
+Guard --> UC6
+Guard --> UC7
+Guard --> UC4
+Admin --> UC9
+Admin --> UC10
+Admin --> UC11
+Admin --> UC12
+Admin --> UC13
+
+UC1 ..> UC2 : <<include>>
+UC1 ..> UC5 : <<include>>
+UC3 ..> UC4 : <<include>>
+UC7 ..> UC8 : <<extend>>
+UC14 ..> UC10 : <<include>>
+UC12 ..> UC13 : <<extend>>
+@enduml
