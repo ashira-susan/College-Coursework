@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /usr/bin/python3
+rootdir: /home/claude/devops-lab/Exp23-Multi-Container-Kubernetes
+plugins: platformdirs-4.13.0
+collecting ... collected 4 items
+
+tests/test_backend.py::test_health PASSED                                [ 25%]
+tests/test_backend.py::test_ready_and_info PASSED                        [ 50%]
+tests/test_backend.py::test_add_and_list_messages PASSED                 [ 75%]
+tests/test_backend.py::test_empty_text_rejected PASSED                   [100%]
+
+============================== 4 passed ===============================
