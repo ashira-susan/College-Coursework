@@ -1,4 +1,4 @@
-# CampusOps – Assignment 1 Documentation
+# CampusOps – Assignment 3 Documentation
 
 ## 1. Project Details
 
@@ -69,7 +69,7 @@ The deployment was verified successfully. Both backend API instances reported he
 
 ## 6. Assignment Submission Contents
 
-The Assignment 1 folder should contain the following:
+The Assignment 3 folder should contain the following:
 
 1. This `README.md` documentation file.
 2. The completed assignment report in Word or PDF format.
