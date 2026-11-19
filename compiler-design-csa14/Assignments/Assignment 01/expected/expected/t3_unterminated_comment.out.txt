@@ -1,0 +1,24 @@
+LINE   TOKEN TYPE           LEXEME
+------ -------------------- ------------------------------
+1      KEYWORD              int
+1      IDENTIFIER           add
+1      DELIMITER            (
+1      KEYWORD              int
+1      IDENTIFIER           a
+1      DELIMITER            ,
+1      KEYWORD              int
+1      IDENTIFIER           b
+1      DELIMITER            )
+2      DELIMITER            {
+3      LEXICAL_ERROR        /* returns the sum of a and b....   <-- Unterminated comment (no closing */)
+
+================ SUMMARY ================
+Valid tokens        : 10
+Comments skipped    : 0
+Lexical errors      : 1
+Security warnings   : 0
+---------- tokens by type ---------------
+KEYWORD              3
+IDENTIFIER           3
+DELIMITER            4
+LEXICAL_ERROR        1

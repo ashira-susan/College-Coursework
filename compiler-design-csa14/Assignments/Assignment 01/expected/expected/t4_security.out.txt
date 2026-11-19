@@ -1,0 +1,153 @@
+LINE   TOKEN TYPE           LEXEME
+------ -------------------- ------------------------------
+1      PREPROCESSOR         #include <string.h>
+2      SECURITY_RISK        #pragma pack(1)   <-- #pragma can silently change compiler/security behaviour
+3      KEYWORD              int
+3      IDENTIFIER           main
+3      DELIMITER            (
+3      KEYWORD              int
+3      IDENTIFIER           argc
+3      DELIMITER            ,
+3      KEYWORD              char
+3      ARITHMETIC_OP        *
+3      ARITHMETIC_OP        *
+3      IDENTIFIER           argv
+3      DELIMITER            )
+4      DELIMITER            {
+5      KEYWORD              char
+5      IDENTIFIER           buf
+5      DELIMITER            [
+5      INTEGER_CONSTANT     16
+5      DELIMITER            ]
+5      DELIMITER            ;
+6      KEYWORD              char
+6      IDENTIFIER           cmd
+6      DELIMITER            [
+6      INTEGER_CONSTANT     64
+6      DELIMITER            ]
+6      DELIMITER            ;
+7      SECURITY_RISK        gets   <-- Unsafe library function (CWE-120/CWE-676/CWE-78)
+7      DELIMITER            (
+7      IDENTIFIER           buf
+7      DELIMITER            )
+7      DELIMITER            ;
+8      SECURITY_RISK        strcpy   <-- Unsafe library function (CWE-120/CWE-676/CWE-78)
+8      DELIMITER            (
+8      IDENTIFIER           buf
+8      DELIMITER            ,
+8      IDENTIFIER           argv
+8      DELIMITER            [
+8      INTEGER_CONSTANT     1
+8      DELIMITER            ]
+8      DELIMITER            )
+8      DELIMITER            ;
+9      SECURITY_RISK        sprintf   <-- Unsafe library function (CWE-120/CWE-676/CWE-78)
+9      DELIMITER            (
+9      IDENTIFIER           cmd
+9      DELIMITER            ,
+9      STRING_LITERAL       "ls %s"
+9      DELIMITER            ,
+9      IDENTIFIER           buf
+9      DELIMITER            )
+9      DELIMITER            ;
+10     SECURITY_RISK        system   <-- Unsafe library function (CWE-120/CWE-676/CWE-78)
+10     DELIMITER            (
+10     IDENTIFIER           cmd
+10     DELIMITER            )
+10     DELIMITER            ;
+11     KEYWORD              int
+11     IDENTIFIER           token
+11     ASSIGN_OP            =
+11     SECURITY_RISK        rand   <-- Weak pseudo-random generator (CWE-338)
+11     DELIMITER            (
+11     DELIMITER            )
+11     DELIMITER            ;
+12     IDENTIFIER           printf
+12     DELIMITER            (
+12     SECURITY_RISK        "value: %n"   <-- Format string with %n (CWE-134: memory write via printf)
+12     DELIMITER            ,
+12     BITWISE_OP           &
+12     IDENTIFIER           token
+12     DELIMITER            )
+12     DELIMITER            ;
+13     IDENTIFIER           FILE
+13     ARITHMETIC_OP        *
+13     IDENTIFIER           f
+13     ASSIGN_OP            =
+13     IDENTIFIER           fopen
+13     DELIMITER            (
+13     SECURITY_RISK        "../../etc/passwd"   <-- Suspicious string: path traversal / shell / sensitive file (CWE-22, CWE-78)
+13     DELIMITER            ,
+13     STRING_LITERAL       "r"
+13     DELIMITER            )
+13     DELIMITER            ;
+14     SECURITY_RISK        system   <-- Unsafe library function (CWE-120/CWE-676/CWE-78)
+14     DELIMITER            (
+14     SECURITY_RISK        "/bin/sh -c id"   <-- Suspicious string: path traversal / shell / sensitive file (CWE-22, CWE-78)
+14     DELIMITER            )
+14     DELIMITER            ;
+15     SECURITY_RISK        asm   <-- goto/inline assembly hinders static analysis
+15     DELIMITER            (
+15     STRING_LITERAL       "nop"
+15     DELIMITER            )
+15     DELIMITER            ;
+16     SECURITY_RISK        goto   <-- goto/inline assembly hinders static analysis
+16     IDENTIFIER           done
+16     DELIMITER            ;
+17     KEYWORD              int
+17     SECURITY_RISK        aVeryLongIdentifierNameThatKee...   <-- Identifier longer than 31 characters (possible obfuscation / overflow probe)
+17     ASSIGN_OP            =
+17     INTEGER_CONSTANT     1
+17     DELIMITER            ;
+18     KEYWORD              int
+18     IDENTIFIER           safe
+18     ASSIGN_OP            =
+18     IDENTIFIER           strlen
+18     DELIMITER            (
+18     IDENTIFIER           buf
+18     DELIMITER            )
+18     DELIMITER            ;
+19     KEYWORD              int
+19     IDENTIFIER           admin_
+19     ASSIGN_OP            =
+19     INTEGER_CONSTANT     0
+19     DELIMITER            ;
+19     SECURITY_RISK        ??=   <-- Trigraph sequence (can hide characters from reviewers)
+19     IDENTIFIER           define
+19     IDENTIFIER           TRICK
+20     KEYWORD              int
+20     SECURITY_RISK        <E2><80><AE>   <-- Non-ASCII bytes (homoglyph / bidirectional 'Trojan Source' risk)
+20     IDENTIFIER           access
+20     ASSIGN_OP            =
+20     INTEGER_CONSTANT     1
+20     DELIMITER            ;
+21     KEYWORD              int
+21     IDENTIFIER           bell
+21     ASSIGN_OP            =
+21     INTEGER_CONSTANT     1
+21     DELIMITER            ;
+21     SECURITY_RISK        <07>   <-- Control character in source (possible obfuscation)
+22     IDENTIFIER           done
+22     SPECIAL_OP           :
+23     KEYWORD              return
+23     INTEGER_CONSTANT     0
+23     DELIMITER            ;
+24     DELIMITER            }
+
+================ SUMMARY ================
+Valid tokens        : 117
+Comments skipped    : 1
+Lexical errors      : 0
+Security warnings   : 16
+---------- tokens by type ---------------
+PREPROCESSOR         1
+SECURITY_RISK        16
+KEYWORD              12
+IDENTIFIER           27
+DELIMITER            54
+ARITHMETIC_OP        3
+INTEGER_CONSTANT     8
+STRING_LITERAL       3
+ASSIGN_OP            7
+BITWISE_OP           1
+SPECIAL_OP           1

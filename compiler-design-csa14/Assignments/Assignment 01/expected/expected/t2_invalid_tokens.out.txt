@@ -1,0 +1,94 @@
+LINE   TOKEN TYPE           LEXEME
+------ -------------------- ------------------------------
+1      KEYWORD              int
+1      IDENTIFIER           main
+1      DELIMITER            (
+1      DELIMITER            )
+2      DELIMITER            {
+3      KEYWORD              int
+3      IDENTIFIER           x
+3      ASSIGN_OP            =
+3      LEXICAL_ERROR        09   <-- Invalid digit in octal constant
+3      DELIMITER            ;
+4      KEYWORD              int
+4      IDENTIFIER           y
+4      ASSIGN_OP            =
+4      LEXICAL_ERROR        12abc   <-- Malformed constant / identifier cannot start with a digit
+4      DELIMITER            ;
+5      KEYWORD              float
+5      IDENTIFIER           f
+5      ASSIGN_OP            =
+5      LEXICAL_ERROR        1.2.3   <-- Malformed floating constant (more than one decimal point)
+5      DELIMITER            ;
+6      KEYWORD              float
+6      IDENTIFIER           g
+6      ASSIGN_OP            =
+6      LEXICAL_ERROR        2.5e+   <-- Malformed floating constant (exponent has no digits)
+6      DELIMITER            ;
+7      KEYWORD              int
+7      IDENTIFIER           h
+7      ASSIGN_OP            =
+7      LEXICAL_ERROR        0x   <-- Hexadecimal constant has no digits
+7      DELIMITER            ;
+8      KEYWORD              int
+8      IDENTIFIER           k
+8      ASSIGN_OP            =
+8      LEXICAL_ERROR        0xZ9   <-- Malformed constant / identifier cannot start with a digit
+8      DELIMITER            ;
+9      KEYWORD              char
+9      IDENTIFIER           c
+9      ASSIGN_OP            =
+9      LEXICAL_ERROR        'ab'   <-- Multi-character constant
+9      DELIMITER            ;
+10     KEYWORD              char
+10     IDENTIFIER           d
+10     ASSIGN_OP            =
+10     LEXICAL_ERROR        ''   <-- Empty character constant
+10     DELIMITER            ;
+11     KEYWORD              char
+11     IDENTIFIER           e
+11     ASSIGN_OP            =
+11     LEXICAL_ERROR        'z;   <-- Unterminated character constant
+12     KEYWORD              char
+12     ARITHMETIC_OP        *
+12     IDENTIFIER           s
+12     ASSIGN_OP            =
+12     LEXICAL_ERROR        "no closing quote;   <-- Unterminated string literal
+13     KEYWORD              int
+13     IDENTIFIER           a
+13     ASSIGN_OP            =
+13     INTEGER_CONSTANT     5
+13     LEXICAL_ERROR        @   <-- Invalid character
+13     INTEGER_CONSTANT     3
+13     DELIMITER            ;
+14     KEYWORD              int
+14     IDENTIFIER           b
+14     ASSIGN_OP            =
+14     LEXICAL_ERROR        $   <-- Invalid character
+14     IDENTIFIER           value
+14     DELIMITER            ;
+15     KEYWORD              int
+15     IDENTIFIER           z
+15     ASSIGN_OP            =
+15     INTEGER_CONSTANT     3
+15     LEXICAL_ERROR        `   <-- Invalid character
+15     INTEGER_CONSTANT     4
+15     DELIMITER            ;
+16     KEYWORD              return
+16     INTEGER_CONSTANT     0
+16     DELIMITER            ;
+17     DELIMITER            }
+
+================ SUMMARY ================
+Valid tokens        : 65
+Comments skipped    : 0
+Lexical errors      : 13
+Security warnings   : 0
+---------- tokens by type ---------------
+KEYWORD              15
+IDENTIFIER           15
+DELIMITER            16
+ASSIGN_OP            13
+LEXICAL_ERROR        13
+ARITHMETIC_OP        1
+INTEGER_CONSTANT     5

@@ -1,0 +1,151 @@
+LINE   TOKEN TYPE           LEXEME
+------ -------------------- ------------------------------
+2      IDENTIFIER           a
+2      ARITHMETIC_OP        ++
+2      ARITHMETIC_OP        +
+2      IDENTIFIER           b
+2      DELIMITER            ;
+2      IDENTIFIER           x
+2      ASSIGN_OP            <<=
+2      INTEGER_CONSTANT     2
+2      DELIMITER            ;
+2      IDENTIFIER           y
+2      ASSIGN_OP            >>=
+2      INTEGER_CONSTANT     1
+2      DELIMITER            ;
+2      IDENTIFIER           p
+2      SPECIAL_OP           ->
+2      IDENTIFIER           next
+2      DELIMITER            ;
+2      IDENTIFIER           q
+2      ASSIGN_OP            =
+2      IDENTIFIER           a
+2      RELATIONAL_OP        <=
+2      IDENTIFIER           b
+2      SPECIAL_OP           ?
+2      IDENTIFIER           a
+2      SPECIAL_OP           :
+2      IDENTIFIER           b
+2      DELIMITER            ;
+3      IDENTIFIER           n1
+3      ASSIGN_OP            =
+3      BINARY_CONSTANT      0b1011
+3      DELIMITER            ;
+3      IDENTIFIER           n2
+3      ASSIGN_OP            =
+3      OCTAL_CONSTANT       0755
+3      DELIMITER            ;
+3      IDENTIFIER           n3
+3      ASSIGN_OP            =
+3      HEX_CONSTANT         0xDEADbeefUL
+3      DELIMITER            ;
+3      IDENTIFIER           n4
+3      ASSIGN_OP            =
+3      INTEGER_CONSTANT     42u
+3      DELIMITER            ;
+3      IDENTIFIER           n5
+3      ASSIGN_OP            =
+3      INTEGER_CONSTANT     0
+3      DELIMITER            ;
+4      IDENTIFIER           f1
+4      ASSIGN_OP            =
+4      FLOAT_CONSTANT       3.14
+4      DELIMITER            ;
+4      IDENTIFIER           f2
+4      ASSIGN_OP            =
+4      FLOAT_CONSTANT       .5
+4      DELIMITER            ;
+4      IDENTIFIER           f3
+4      ASSIGN_OP            =
+4      FLOAT_CONSTANT       6.02e23
+4      DELIMITER            ;
+4      IDENTIFIER           f4
+4      ASSIGN_OP            =
+4      FLOAT_CONSTANT       1e-9f
+4      DELIMITER            ;
+4      IDENTIFIER           f5
+4      ASSIGN_OP            =
+4      FLOAT_CONSTANT       10.
+4      DELIMITER            ;
+5      IDENTIFIER           s1
+5      ASSIGN_OP            =
+5      STRING_LITERAL       "// not a comment"
+5      DELIMITER            ;
+5      IDENTIFIER           s2
+5      ASSIGN_OP            =
+5      STRING_LITERAL       "/* not a comment */"
+5      DELIMITER            ;
+5      IDENTIFIER           s3
+5      ASSIGN_OP            =
+5      STRING_LITERAL       "tab\there \"quoted\""
+5      DELIMITER            ;
+6      IDENTIFIER           c1
+6      ASSIGN_OP            =
+6      CHAR_CONSTANT        '\n'
+6      DELIMITER            ;
+6      IDENTIFIER           c2
+6      ASSIGN_OP            =
+6      CHAR_CONSTANT        '\\'
+6      DELIMITER            ;
+6      IDENTIFIER           c3
+6      ASSIGN_OP            =
+6      CHAR_CONSTANT        '\''
+6      DELIMITER            ;
+6      IDENTIFIER           c4
+6      ASSIGN_OP            =
+6      CHAR_CONSTANT        '\x41'
+6      DELIMITER            ;
+6      IDENTIFIER           c5
+6      ASSIGN_OP            =
+6      CHAR_CONSTANT        '\0'
+6      DELIMITER            ;
+7      KEYWORD              int
+7      IDENTIFIER           ifx
+7      DELIMITER            ;
+7      KEYWORD              int
+7      IDENTIFIER           integer
+7      DELIMITER            ;
+7      KEYWORD              int
+7      IDENTIFIER           _under_score9
+7      DELIMITER            ;
+8      KEYWORD              if
+8      DELIMITER            (
+8      IDENTIFIER           a
+8      RELATIONAL_OP        ==
+8      IDENTIFIER           b
+8      DELIMITER            )
+8      KEYWORD              while
+8      DELIMITER            (
+8      LOGICAL_OP           !
+8      IDENTIFIER           c
+8      DELIMITER            )
+8      DELIMITER            {
+8      IDENTIFIER           arr
+8      DELIMITER            [
+8      IDENTIFIER           i
+8      DELIMITER            ]
+8      ARITHMETIC_OP        ++
+8      DELIMITER            ;
+8      DELIMITER            }
+
+================ SUMMARY ================
+Valid tokens        : 127
+Comments skipped    : 2
+Lexical errors      : 0
+Security warnings   : 0
+---------- tokens by type ---------------
+IDENTIFIER           37
+ARITHMETIC_OP        3
+DELIMITER            35
+ASSIGN_OP            21
+INTEGER_CONSTANT     4
+SPECIAL_OP           3
+RELATIONAL_OP        2
+BINARY_CONSTANT      1
+OCTAL_CONSTANT       1
+HEX_CONSTANT         1
+FLOAT_CONSTANT       5
+STRING_LITERAL       3
+CHAR_CONSTANT        5
+KEYWORD              5
+LOGICAL_OP           1

@@ -1,0 +1,121 @@
+LINE   TOKEN TYPE           LEXEME
+------ -------------------- ------------------------------
+1      PREPROCESSOR         #include <stdio.h>
+2      PREPROCESSOR         #define MAX 100
+6      KEYWORD              int
+6      IDENTIFIER           main
+6      DELIMITER            (
+6      KEYWORD              void
+6      DELIMITER            )
+7      DELIMITER            {
+8      KEYWORD              int
+8      IDENTIFIER           n
+8      ASSIGN_OP            =
+8      INTEGER_CONSTANT     10
+8      DELIMITER            ,
+8      IDENTIFIER           i
+8      DELIMITER            ,
+8      IDENTIFIER           sum
+8      ASSIGN_OP            =
+8      INTEGER_CONSTANT     0
+8      DELIMITER            ;
+9      KEYWORD              float
+9      IDENTIFIER           avg
+9      ASSIGN_OP            =
+9      FLOAT_CONSTANT       0.0f
+9      DELIMITER            ;
+10     KEYWORD              char
+10     IDENTIFIER           grade
+10     ASSIGN_OP            =
+10     CHAR_CONSTANT        'A'
+10     DELIMITER            ;
+11     KEYWORD              unsigned
+11     KEYWORD              int
+11     IDENTIFIER           mask
+11     ASSIGN_OP            =
+11     HEX_CONSTANT         0xFF
+11     DELIMITER            ;
+12     KEYWORD              long
+12     IDENTIFIER           big
+12     ASSIGN_OP            =
+12     INTEGER_CONSTANT     123456789L
+12     DELIMITER            ;
+14     KEYWORD              for
+14     DELIMITER            (
+14     IDENTIFIER           i
+14     ASSIGN_OP            =
+14     INTEGER_CONSTANT     1
+14     DELIMITER            ;
+14     IDENTIFIER           i
+14     RELATIONAL_OP        <=
+14     IDENTIFIER           n
+14     DELIMITER            ;
+14     IDENTIFIER           i
+14     ARITHMETIC_OP        ++
+14     DELIMITER            )
+14     DELIMITER            {
+15     IDENTIFIER           sum
+15     ASSIGN_OP            +=
+15     IDENTIFIER           i
+15     DELIMITER            ;
+16     DELIMITER            }
+17     KEYWORD              if
+17     DELIMITER            (
+17     IDENTIFIER           sum
+17     RELATIONAL_OP        >
+17     IDENTIFIER           MAX
+17     LOGICAL_OP           &&
+17     IDENTIFIER           grade
+17     RELATIONAL_OP        !=
+17     CHAR_CONSTANT        'B'
+17     DELIMITER            )
+17     DELIMITER            {
+18     IDENTIFIER           avg
+18     ASSIGN_OP            =
+18     IDENTIFIER           sum
+18     ARITHMETIC_OP        /
+18     FLOAT_CONSTANT       2.5
+18     DELIMITER            ;
+19     DELIMITER            }
+19     KEYWORD              else
+19     DELIMITER            {
+20     IDENTIFIER           avg
+20     ASSIGN_OP            =
+20     IDENTIFIER           sum
+20     ARITHMETIC_OP        %
+20     INTEGER_CONSTANT     7
+20     DELIMITER            ;
+21     DELIMITER            }
+22     IDENTIFIER           printf
+22     DELIMITER            (
+22     STRING_LITERAL       "Sum = %d, Avg = %f\n"
+22     DELIMITER            ,
+22     IDENTIFIER           sum
+22     DELIMITER            ,
+22     IDENTIFIER           avg
+22     DELIMITER            )
+22     DELIMITER            ;
+23     KEYWORD              return
+23     INTEGER_CONSTANT     0
+23     DELIMITER            ;
+24     DELIMITER            }
+
+================ SUMMARY ================
+Valid tokens        : 99
+Comments skipped    : 2
+Lexical errors      : 0
+Security warnings   : 0
+---------- tokens by type ---------------
+PREPROCESSOR         2
+KEYWORD              12
+IDENTIFIER           24
+DELIMITER            32
+ASSIGN_OP            10
+INTEGER_CONSTANT     6
+FLOAT_CONSTANT       2
+CHAR_CONSTANT        2
+HEX_CONSTANT         1
+RELATIONAL_OP        3
+ARITHMETIC_OP        3
+LOGICAL_OP           1
+STRING_LITERAL       1

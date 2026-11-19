@@ -1,0 +1,32 @@
+{
+ "T1 valid": {
+  "total": 99,
+  "comments": 2,
+  "errors": 0,
+  "security": 0
+ },
+ "T2 invalid": {
+  "total": 65,
+  "comments": 0,
+  "errors": 13,
+  "security": 0
+ },
+ "T3 comment": {
+  "total": 10,
+  "comments": 0,
+  "errors": 1,
+  "security": 0
+ },
+ "T4 security": {
+  "total": 117,
+  "comments": 1,
+  "errors": 0,
+  "security": 16
+ },
+ "T5 edge": {
+  "total": 127,
+  "comments": 2,
+  "errors": 0,
+  "security": 0
+ }
+}
