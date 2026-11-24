@@ -1,0 +1,19 @@
+flowchart LR
+  T["Tester / QA"] -->|"test cases, requirements"| P1(("1. Test Design"))
+  P1 --> D1[("Test cases, suites, requirements")]
+  D1 --> P2(("2. Automated Execution"))
+  T -->|"run request"| P2
+  P2 -->|"HTTP requests"| S["System under test"]
+  S -->|"responses"| P2
+  P2 --> D2[("Runs and results")]
+  P2 -->|"failed results"| P3(("3. Defect Identification"))
+  P3 --> D3[("Defects and history")]
+  D3 --> P4(("4. Defect Lifecycle"))
+  Dev["Developer"] -->|"fix / resolution"| P4
+  T -->|"retest, verify, close"| P4
+  P4 -->|"retest request"| P2
+  D2 --> P5(("5. Reporting"))
+  D3 --> P5
+  P5 -->|"dashboards, CSV, traceability"| M["Managers / Executives"]
+  A["Admin"] -->|"users, roles"| P6(("6. Administration"))
+  P6 --> D4[("Users, audit log")]

@@ -1,0 +1,19 @@
+{
+  "name": "qaforge-nexus",
+  "version": "1.0.0",
+  "description": "QAForge Nexus: a web-based functional testing and software validation platform (PostgreSQL) with automated black-box test execution, defect identification lifecycles and a real Defects4J bug dataset.",
+  "main": "server/index.js",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "seed": "node server/seed.js --reset",
+    "seed:minimal": "node server/seed.js --minimal",
+    "dataset:extract": "node scripts/extract-defects4j.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {}
+}

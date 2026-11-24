@@ -1,0 +1,13 @@
+# PostgreSQL for QAForge Nexus.   docker compose up -d   then   npm run seed && npm start
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: qaforge
+      POSTGRES_PASSWORD: qaforge
+      POSTGRES_DB: qaforge
+    ports: ["5432:5432"]
+    volumes: [qaforge-data:/var/lib/postgresql/data]
+volumes:
+  qaforge-data:
