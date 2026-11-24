@@ -1,0 +1,112 @@
+# LOCAL SIMULATION - a local bare repo stands in for GitHub (origin)
+
+## 01. (setup) two people share one repository
+# Susan's working copy (folder 'susan') and the teammate's copy (folder 'teammate') both track the same remote.
+$ cd ~/git-lab/susan
+$ git log --oneline
+ea3dc64 Initial commit
+
+## 02. Teammate pushes a change
+$ cd ~/git-lab/teammate
+$ git add ideas.md
+$ git commit -m "Add ideas list"
+[main 8d54c02] Add ideas list
+ 1 file changed, 4 insertions(+)
+ create mode 100644 ideas.md
+$ git push origin main
+To ~/git-lab/remote/team-notes.git
+   ea3dc64..8d54c02  main -> main
+
+## 03. Susan checks for new work (fetch)
+$ cd ~/git-lab/susan
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+$ git fetch origin
+From ~/git-lab/remote/team-notes
+   ea3dc64..8d54c02  main       -> origin/main
+$ git status
+On branch main
+Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+nothing to commit, working tree clean
+$ git log HEAD..origin/main --oneline
+8d54c02 Add ideas list
+$ git diff HEAD origin/main --stat
+ ideas.md | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+## 04. Susan pulls the changes
+$ cd ~/git-lab/susan
+$ git pull origin main
+Updating ea3dc64..8d54c02
+Fast-forward
+ ideas.md | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 ideas.md
+From ~/git-lab/remote/team-notes
+ * branch            main       -> FETCH_HEAD
+$ ls
+README.md
+ideas.md
+$ cat ideas.md
+# Ideas
+
+- Build a login page
+- Write tests
+$ git log --oneline
+8d54c02 Add ideas list
+ea3dc64 Initial commit
+
+## 05. Both work: push is rejected until you pull
+$ cd ~/git-lab/susan
+$ git add tasks.md && git commit -m "Add tasks list"
+[main 2dc7e09] Add tasks list
+ 1 file changed, 3 insertions(+)
+ create mode 100644 tasks.md
+$ cd ~/git-lab/teammate
+$ git commit -am "Add dark mode idea" && git push origin main   # (teammate's terminal)
+[main d130b18] Add dark mode idea
+ 1 file changed, 1 insertion(+)
+To ~/git-lab/remote/team-notes.git
+   8d54c02..d130b18  main -> main
+$ cd ~/git-lab/susan
+$ git push origin main
+To ~/git-lab/remote/team-notes.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to '~/git-lab/remote/team-notes.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+## 06. Pull (merge) and push again
+$ cd ~/git-lab/susan
+$ git config pull.rebase false
+$ git pull origin main
+Merge made by the 'ort' strategy.
+ ideas.md | 1 +
+ 1 file changed, 1 insertion(+)
+From ~/git-lab/remote/team-notes
+ * branch            main       -> FETCH_HEAD
+   8d54c02..d130b18  main       -> origin/main
+$ git push origin main
+To ~/git-lab/remote/team-notes.git
+   d130b18..fe6f69e  main -> main
+$ git log --oneline --graph
+*   fe6f69e Merge branch 'main' of ~/git-lab/remote/team-notes
+|\
+| * d130b18 Add dark mode idea
+* | 2dc7e09 Add tasks list
+|/
+* 8d54c02 Add ideas list
+* ea3dc64 Initial commit
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
