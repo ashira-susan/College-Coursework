@@ -1,0 +1,16 @@
+{
+  "name": "qaforge-nexus",
+  "version": "1.0.0",
+  "description": "QAForge Nexus: a web-based functional testing and software validation platform with automated black-box test case execution and defect identification lifecycles.",
+  "main": "server/index.js",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server/index.js",
+    "seed": "node --disable-warning=ExperimentalWarning server/seed.js --reset",
+    "seed:minimal": "node --disable-warning=ExperimentalWarning server/seed.js --minimal",
+    "test": "node --disable-warning=ExperimentalWarning --test tests/*.test.js"
+  },
+  "dependencies": {}
+}

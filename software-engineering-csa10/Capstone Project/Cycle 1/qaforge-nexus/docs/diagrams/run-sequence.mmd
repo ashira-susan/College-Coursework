@@ -1,0 +1,29 @@
+sequenceDiagram
+  actor QE as QA Engineer
+  participant UI as Browser SPA
+  participant API as REST API
+  participant ENG as Execution Engine
+  participant SUT as System Under Test
+  participant LC as Defect Lifecycle
+  participant DB as SQLite
+  QE->>UI: Click "Run automated suite"
+  UI->>API: POST /api/projects/SHOP/runs
+  API->>DB: create RUN row (queued)
+  API-->>UI: 202 Accepted + run id
+  API->>ENG: executeRun (async)
+  loop each test case in dependency order
+    ENG->>SUT: HTTP request (method, url, headers, body)
+    SUT-->>ENG: response (status, body, time)
+    ENG->>ENG: evaluate assertions (status, body path, header, text, time)
+    alt failed and retries left
+      ENG->>SUT: retry (flaky detection)
+    end
+    ENG->>DB: store result + evidence
+    opt result still failed
+      ENG->>LC: autoDefectFromResult
+      LC->>DB: create / re-observe / reopen defect, auto-assign, notify
+    end
+  end
+  ENG->>DB: mark run completed + totals
+  UI->>API: poll GET /api/runs/:id
+  API-->>UI: results, defects links

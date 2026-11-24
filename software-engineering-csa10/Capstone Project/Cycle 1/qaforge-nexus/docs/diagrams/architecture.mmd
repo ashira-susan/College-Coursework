@@ -1,0 +1,23 @@
+flowchart TB
+  subgraph Client["Browser - Single Page Application (HTML / CSS / vanilla JS)"]
+    UI["Dashboard | Projects | Test Cases | Runs | Defects | Org | Admin"]
+  end
+  subgraph Server["QAForge Nexus Server (Node.js 22, zero dependencies)"]
+    HTTP["HTTP layer: router, JSON body, static files, rate limit"]
+    AUTH["Auth and RBAC: scrypt + HMAC JWT, lockout, project scoping"]
+    API["REST routes: core, projects, testing, defects, reports"]
+    ENG["Execution Engine: plan builder, dependency setup, retries, assertions, SSRF guard"]
+    LIFE["Defect Lifecycle Engine: auto-identification, de-dup, state machine, SLA, notifications"]
+    DB[("SQLite - node:sqlite, WAL")]
+    SUT["Built-in Demo Target (Nexora Storefront API, switchable defects)"]
+  end
+  EXT["External systems under test (any HTTP/JSON API)"]
+  UI -->|"REST / JSON + Bearer token"| HTTP --> AUTH --> API
+  API --> ENG
+  API --> LIFE
+  ENG -->|"black-box HTTP requests"| SUT
+  ENG -->|"black-box HTTP requests"| EXT
+  ENG -->|"failed result"| LIFE
+  API --> DB
+  ENG --> DB
+  LIFE --> DB
