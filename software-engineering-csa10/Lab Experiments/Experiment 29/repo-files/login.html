@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login - Login App</title>
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  <main class="login-card">
+    <h1>Sign in</h1>
+    <form id="loginForm" novalidate>
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="username">
+      <small class="error" id="emailError"></small>
+
+      <label for="password">Password</label>
+      <div class="pw">
+        <input id="password" type="password" placeholder="At least 8 characters" autocomplete="current-password">
+        <button type="button" id="togglePw" aria-label="Show password">Show</button>
+      </div>
+      <small class="error" id="passwordError"></small>
+
+      <button type="submit" class="primary">Login</button>
+      <p id="formMessage" role="status"></p>
+    </form>
+  </main>
+  <script src="js/login.js"></script>
+</body>
+</html>

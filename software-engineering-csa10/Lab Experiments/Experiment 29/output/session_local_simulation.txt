@@ -1,0 +1,116 @@
+# LOCAL SIMULATION - local bare repos stand in for GitHub (origin / upstream / fork)
+
+## 01. (setup) project on main
+$ cd ~/git-lab/login-app
+$ git log --oneline
+c9922f7 Initial home page
+$ git branch -a
+* main
+  remotes/origin/main
+
+## 02. Create the feature-login branch
+$ cd ~/git-lab/login-app
+$ git switch -c feature-login
+Switched to a new branch 'feature-login'
+$ git branch
+* feature-login
+  main
+
+## 03. Develop the feature - commit 1: login page UI
+$ cd ~/git-lab/login-app
+$ ls -R   # new files: login.html, css/login.css
+.:
+README.md
+css
+index.html
+login.html
+
+./css:
+login.css
+$ git status -s
+?? css/
+?? login.html
+$ git add login.html css/login.css
+$ git commit -m "Add login page UI"
+[feature-login 204b2e6] Add login page UI
+ 2 files changed, 43 insertions(+)
+ create mode 100644 css/login.css
+ create mode 100644 login.html
+
+## 04. Commit 2: form validation and link from home
+$ cd ~/git-lab/login-app
+# edit index.html: add a Login link   (and create js/login.js)
+$ git status -s
+ index.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ git add js/login.js index.html
+$ git commit -m "Add login form validation and home page link"
+[feature-login 4a0c72e] Add login form validation and home page link
+ 2 files changed, 39 insertions(+), 1 deletion(-)
+ create mode 100644 js/login.js
+$ git log --oneline
+4a0c72e Add login form validation and home page link
+204b2e6 Add login page UI
+c9922f7 Initial home page
+
+## 05. Push the feature branch
+$ cd ~/git-lab/login-app
+$ git push -u origin feature-login
+branch 'feature-login' set up to track 'origin/feature-login'.
+To ~/git-lab/remote/login-app.git
+ * [new branch]      feature-login -> feature-login
+$ git branch -a
+* feature-login
+  main
+  remotes/origin/feature-login
+  remotes/origin/main
+
+## 06. What the pull request will contain
+$ cd ~/git-lab/login-app
+$ git log main..feature-login --oneline
+4a0c72e Add login form validation and home page link
+204b2e6 Add login page UI
+$ git diff main...feature-login --stat
+ css/login.css | 13 +++++++++++++
+ index.html    |  2 +-
+ js/login.js   | 38 ++++++++++++++++++++++++++++++++++++++
+ login.html    | 30 ++++++++++++++++++++++++++++++
+ 4 files changed, 82 insertions(+), 1 deletion(-)
+
+## 07. Merge (what GitHub's Merge pull request button does)
+# On GitHub: open the Pull Request -> Merge pull request -> Confirm. The three commands below do the same locally.
+$ cd ~/git-lab/login-app
+$ git switch main
+Your branch is up to date with 'origin/main'.
+Switched to branch 'main'
+$ git merge --no-ff feature-login -m "Merge pull request #1 from feature-login"
+Merge made by the 'ort' strategy.
+ css/login.css | 13 +++++++++++++
+ index.html    |  2 +-
+ js/login.js   | 38 ++++++++++++++++++++++++++++++++++++++
+ login.html    | 30 ++++++++++++++++++++++++++++++
+ 4 files changed, 82 insertions(+), 1 deletion(-)
+ create mode 100644 css/login.css
+ create mode 100644 js/login.js
+ create mode 100644 login.html
+$ git push origin main
+To ~/git-lab/remote/login-app.git
+   c9922f7..692e0af  main -> main
+$ git log --oneline --graph
+*   692e0af Merge pull request #1 from feature-login
+|\
+| * 4a0c72e Add login form validation and home page link
+| * 204b2e6 Add login page UI
+|/
+* c9922f7 Initial home page
+
+## 08. Delete the merged branch
+$ cd ~/git-lab/login-app
+$ git branch -d feature-login
+Deleted branch feature-login (was 4a0c72e).
+$ git push origin --delete feature-login
+To ~/git-lab/remote/login-app.git
+ - [deleted]         feature-login
+$ git branch -a
+* main
+  remotes/origin/main

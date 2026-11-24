@@ -1,0 +1,128 @@
+# LOCAL SIMULATION - local bare repos stand in for GitHub (origin / upstream / fork)
+
+## 01. Fork and clone
+# GitHub: Fork button on the original repository. Equivalent copy:
+$ cd ~/git-lab
+$ git clone --bare <original-repo-url> <your-fork-url>   # the Fork button
+Cloning into bare repository 'remote/ashira-susan/greeting-lib.git'...
+done.
+$ git clone <your-fork-url>
+Cloning into 'greeting-lib'...
+done.
+$ cd ~/git-lab/greeting-lib
+$ git remote add upstream <original-repo-url>
+$ git remote -v
+origin	~/git-lab/remote/ashira-susan/greeting-lib.git (fetch)
+origin	~/git-lab/remote/ashira-susan/greeting-lib.git (push)
+upstream	~/git-lab/remote/course-instructor/greeting-lib.git (fetch)
+upstream	~/git-lab/remote/course-instructor/greeting-lib.git (push)
+
+## 02. Create a feature branch
+$ cd ~/git-lab/greeting-lib
+$ git switch -c feature/add-goodbye
+Switched to a new branch 'feature/add-goodbye'
+# add goodbye() to greetings.py and a test in tests/test_greetings.py
+$ git diff --stat
+ greetings.py            | 5 +++++
+ tests/test_greetings.py | 6 +++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+## 03. Test, then commit
+$ cd ~/git-lab/greeting-lib
+$ python3 -m pytest -q -p no:cacheprovider
+..                                                                       [100%]
+2 passed in 0.01s
+$ git add greetings.py tests/test_greetings.py
+$ git commit -m "Add goodbye() function with test"
+[feature/add-goodbye bcd6563] Add goodbye() function with test
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+## 04. The original repository moves ahead meanwhile
+$ cd ~/git-lab/maintainer
+# (maintainer commits 'Add contributing note to README' to the original repository)
+[main a95735a] Add contributing note to README
+ 1 file changed, 3 insertions(+)
+To ~/git-lab/remote/course-instructor/greeting-lib.git
+   8c61b48..a95735a  main -> main
+
+## 05. Sync with upstream before opening the PR
+$ cd ~/git-lab/greeting-lib
+$ git fetch upstream
+From ~/git-lab/remote/course-instructor/greeting-lib
+ * [new branch]      main       -> upstream/main
+$ git log --oneline --graph --all
+* bcd6563 Add goodbye() function with test
+| * a95735a Add contributing note to README
+|/
+* 8c61b48 Initial commit
+$ git rebase upstream/main
+Rebasing (1/1)
+Successfully rebased and updated refs/heads/feature/add-goodbye.
+$ git log --oneline --graph
+* 62e1255 Add goodbye() function with test
+* a95735a Add contributing note to README
+* 8c61b48 Initial commit
+$ python3 -m pytest -q -p no:cacheprovider
+..                                                                       [100%]
+2 passed in 0.01s
+
+## 06. Push the feature branch to your fork
+$ cd ~/git-lab/greeting-lib
+$ git push -u origin feature/add-goodbye
+branch 'feature/add-goodbye' set up to track 'origin/feature/add-goodbye'.
+To ~/git-lab/remote/ashira-susan/greeting-lib.git
+ * [new branch]      feature/add-goodbye -> feature/add-goodbye
+
+## 07. Open the pull request (GitHub)
+# Base repository: original repo / main   <-   head repository: your fork / feature/add-goodbye
+$ cd ~/git-lab/greeting-lib
+$ git log upstream/main..feature/add-goodbye --oneline
+62e1255 Add goodbye() function with test
+$ git diff upstream/main...feature/add-goodbye --stat
+ greetings.py            | 5 +++++
+ tests/test_greetings.py | 6 +++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+## 08. Maintainer merges the pull request
+$ cd ~/git-lab/maintainer
+$ git remote add susan-fork <contributor-fork-url>
+$ git fetch susan-fork
+From ~/git-lab/remote/ashira-susan/greeting-lib
+ * [new branch]      feature/add-goodbye -> susan-fork/feature/add-goodbye
+ * [new branch]      main                -> susan-fork/main
+$ git merge --ff-only susan-fork/feature/add-goodbye   # 'Rebase and merge' on GitHub
+Updating a95735a..62e1255
+Fast-forward
+ greetings.py            | 5 +++++
+ tests/test_greetings.py | 6 +++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+$ git push origin main
+To ~/git-lab/remote/course-instructor/greeting-lib.git
+   a95735a..62e1255  main -> main
+
+## 09. Update your fork's main and delete the branch
+$ cd ~/git-lab/greeting-lib
+$ git switch main
+Your branch is up to date with 'origin/main'.
+Switched to branch 'main'
+$ git fetch upstream && git merge --ff-only upstream/main
+Updating 8c61b48..62e1255
+Fast-forward
+ README.md               | 3 +++
+ greetings.py            | 5 +++++
+ tests/test_greetings.py | 6 +++++-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
+From ~/git-lab/remote/course-instructor/greeting-lib
+   a95735a..62e1255  main       -> upstream/main
+$ git push origin main
+To ~/git-lab/remote/ashira-susan/greeting-lib.git
+   8c61b48..62e1255  main -> main
+$ git branch -d feature/add-goodbye
+Deleted branch feature/add-goodbye (was 62e1255).
+$ git push origin --delete feature/add-goodbye
+To ~/git-lab/remote/ashira-susan/greeting-lib.git
+ - [deleted]         feature/add-goodbye
+$ git log --oneline --graph
+* 62e1255 Add goodbye() function with test
+* a95735a Add contributing note to README
+* 8c61b48 Initial commit
