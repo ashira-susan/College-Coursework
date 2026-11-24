@@ -1,0 +1,139 @@
+# LOCAL SIMULATION - local bare repos stand in for GitHub (origin / upstream / fork)
+
+## 01. Fork the repository (GitHub: Fork button)
+# On GitHub: open the original repo -> click Fork -> Create fork. GitHub makes your own copy under your account.
+# Equivalent of that copy, done here with git:
+$ cd ~/git-lab
+$ git clone --bare <original-repo-url> <your-fork-url>   # what the Fork button does
+Cloning into bare repository 'remote/ashira-susan/open-source-demo.git'...
+done.
+
+## 02. Clone YOUR fork and add the upstream remote
+$ cd ~/git-lab
+$ git clone <your-fork-url>
+Cloning into 'open-source-demo'...
+done.
+$ cd ~/git-lab/open-source-demo
+$ git remote -v
+origin	~/git-lab/remote/ashira-susan/open-source-demo.git (fetch)
+origin	~/git-lab/remote/ashira-susan/open-source-demo.git (push)
+$ git remote add upstream <original-repo-url>
+$ git remote -v
+origin	~/git-lab/remote/ashira-susan/open-source-demo.git (fetch)
+origin	~/git-lab/remote/ashira-susan/open-source-demo.git (push)
+upstream	~/git-lab/remote/course-instructor/open-source-demo.git (fetch)
+upstream	~/git-lab/remote/course-instructor/open-source-demo.git (push)
+
+## 03. Create a branch and make your contribution
+$ cd ~/git-lab/open-source-demo
+$ git switch -c add-susan-profile
+Switched to a new branch 'add-susan-profile'
+# add one row to CONTRIBUTORS.md and create contributors/susan.md
+$ cat CONTRIBUTORS.md
+# Contributors
+
+| Name | GitHub | Profile |
+|------|--------|---------|
+| Course Instructor | @course-instructor | contributors/instructor.md |
+| Susan | @ashira-susan | contributors/susan.md |
+$ git status -s
+ M CONTRIBUTORS.md
+?? contributors/susan.md
+$ git add contributors/susan.md CONTRIBUTORS.md
+$ git commit -m "Add Susan to contributors"
+[add-susan-profile 047a67a] Add Susan to contributors
+ 2 files changed, 5 insertions(+)
+ create mode 100644 contributors/susan.md
+
+## 04. Push the branch to your fork
+$ cd ~/git-lab/open-source-demo
+$ git push -u origin add-susan-profile
+branch 'add-susan-profile' set up to track 'origin/add-susan-profile'.
+To ~/git-lab/remote/ashira-susan/open-source-demo.git
+ * [new branch]      add-susan-profile -> add-susan-profile
+$ git branch -a
+* add-susan-profile
+  main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/add-susan-profile
+  remotes/origin/main
+
+## 05. Open the pull request (GitHub)
+# GitHub shows 'Compare & pull request'. Base repository: original repo, base: main  <-  head repository: your fork, compare: add-susan-profile.
+$ cd ~/git-lab/open-source-demo
+$ git log main..add-susan-profile --oneline
+047a67a Add Susan to contributors
+$ git diff main...add-susan-profile --stat
+ CONTRIBUTORS.md       | 1 +
+ contributors/susan.md | 4 ++++
+ 2 files changed, 5 insertions(+)
+
+## 06. Reviewer asks for changes - update the same PR
+# Review comment: 'Please add a Skills section to your profile.'  Commit to the SAME branch and push - the PR updates automatically.
+$ cd ~/git-lab/open-source-demo
+$ git commit -am "Address review: add skills section"
+[add-susan-profile b5a7cf2] Address review: add skills section
+ 1 file changed, 4 insertions(+)
+$ git push
+To ~/git-lab/remote/ashira-susan/open-source-demo.git
+   047a67a..b5a7cf2  add-susan-profile -> add-susan-profile
+$ git log main..add-susan-profile --oneline
+b5a7cf2 Address review: add skills section
+047a67a Add Susan to contributors
+
+## 07. Maintainer merges the pull request
+# Maintainer's computer (simulates the green 'Merge pull request' button).
+$ cd ~/git-lab/maintainer
+$ git remote add susan-fork <contributor-fork-url>
+$ git fetch susan-fork
+From ~/git-lab/remote/ashira-susan/open-source-demo
+ * [new branch]      add-susan-profile -> susan-fork/add-susan-profile
+ * [new branch]      main              -> susan-fork/main
+$ git merge --no-ff susan-fork/add-susan-profile -m "Merge pull request #1 from ashira-susan/add-susan-profile"
+Merge made by the 'ort' strategy.
+ CONTRIBUTORS.md       | 1 +
+ contributors/susan.md | 8 ++++++++
+ 2 files changed, 9 insertions(+)
+ create mode 100644 contributors/susan.md
+$ git push origin main
+To ~/git-lab/remote/course-instructor/open-source-demo.git
+   1810590..6c92b8c  main -> main
+
+## 08. Sync your fork with the original repository
+$ cd ~/git-lab/open-source-demo
+$ git switch main
+Your branch is up to date with 'origin/main'.
+Switched to branch 'main'
+$ git fetch upstream
+From ~/git-lab/remote/course-instructor/open-source-demo
+ * [new branch]      main       -> upstream/main
+$ git merge upstream/main
+Updating 1810590..6c92b8c
+Fast-forward
+ CONTRIBUTORS.md       | 1 +
+ contributors/susan.md | 8 ++++++++
+ 2 files changed, 9 insertions(+)
+ create mode 100644 contributors/susan.md
+$ git push origin main
+To ~/git-lab/remote/ashira-susan/open-source-demo.git
+   1810590..6c92b8c  main -> main
+$ git log --oneline --graph
+*   6c92b8c Merge pull request #1 from ashira-susan/add-susan-profile
+|\
+| * b5a7cf2 Address review: add skills section
+| * 047a67a Add Susan to contributors
+|/
+* 1810590 Initial commit
+
+## 09. Clean up the branch
+$ cd ~/git-lab/open-source-demo
+$ git branch -d add-susan-profile
+Deleted branch add-susan-profile (was b5a7cf2).
+$ git push origin --delete add-susan-profile
+To ~/git-lab/remote/ashira-susan/open-source-demo.git
+ - [deleted]         add-susan-profile
+$ git branch -a
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/main
+  remotes/upstream/main
