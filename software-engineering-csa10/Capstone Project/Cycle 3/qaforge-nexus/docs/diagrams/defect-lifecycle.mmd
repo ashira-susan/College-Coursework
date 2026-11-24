@@ -1,0 +1,30 @@
+stateDiagram-v2
+  [*] --> New: manual report or auto-identified from failed test
+  New --> Assigned: manager assigns / auto-assign least-loaded developer
+  New --> Rejected
+  New --> Duplicate
+  New --> Deferred
+  Assigned --> InProgress: assignee starts work
+  Assigned --> Rejected
+  Assigned --> Duplicate
+  Assigned --> Deferred
+  InProgress --> Fixed: resolution note required
+  InProgress --> Assigned
+  InProgress --> Deferred
+  Fixed --> Retesting: automated or manual retest
+  Fixed --> Reopened
+  Retesting --> Verified: retest passes
+  Retesting --> Reopened: retest fails
+  Verified --> Closed
+  Verified --> Reopened
+  Closed --> Reopened: regression detected
+  Reopened --> InProgress
+  Reopened --> Assigned
+  Reopened --> Deferred
+  Rejected --> Closed
+  Rejected --> Reopened
+  Deferred --> Assigned
+  Deferred --> Closed
+  Duplicate --> Closed
+  Duplicate --> Reopened
+  Closed --> [*]

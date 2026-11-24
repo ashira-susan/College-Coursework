@@ -1,0 +1,33 @@
+flowchart LR
+  ALL["All users: log in, change password, view notifications"]
+  ALL --> AD & QM & QE & DEV & PO & VW
+  subgraph AD["Administrator"]
+    a1["Manage users and roles"]
+    a2["View audit log"]
+    a3["Manage projects and members"]
+  end
+  subgraph QM["QA Manager"]
+    m1["Create projects, manage members"]
+    m2["Assign defects, close, reopen, defer"]
+    m3["Run suites, view dashboard, export CSV"]
+    m4["View audit log"]
+  end
+  subgraph QE["QA Engineer"]
+    e1["Design test cases, suites, requirements"]
+    e2["Execute automated black-box run"]
+    e3["Record manual results, report defects"]
+    e4["Automated retest, verify, close"]
+  end
+  subgraph DEV["Developer"]
+    d1["Start work on assigned defect"]
+    d2["Mark fixed with resolution note"]
+    d3["Reject invalid defect with reason"]
+  end
+  subgraph PO["Product Owner"]
+    p1["Manage requirements"]
+    p2["Report and defer defects"]
+  end
+  subgraph VW["Viewer / Executive"]
+    v1["Read-only dashboards and reports"]
+  end
+  e2 -. "include" .-> AUTO["Auto-identify defects from failed results"]

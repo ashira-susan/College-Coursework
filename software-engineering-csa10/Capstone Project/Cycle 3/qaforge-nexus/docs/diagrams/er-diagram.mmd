@@ -1,0 +1,70 @@
+erDiagram
+  DEPARTMENTS ||--o{ USERS : employs
+  USERS ||--o{ PROJECT_MEMBERS : joins
+  PROJECTS ||--o{ PROJECT_MEMBERS : has
+  USERS ||--o{ PROJECTS : owns
+  PROJECTS ||--o{ REQUIREMENTS : defines
+  PROJECTS ||--o{ SUITES : groups
+  SUITES ||--o{ TEST_CASES : contains
+  REQUIREMENTS ||--o{ TEST_CASES : "covered by"
+  PROJECTS ||--o{ TEST_RUNS : executes
+  TEST_RUNS ||--o{ TEST_RESULTS : records
+  TEST_CASES ||--o{ TEST_RESULTS : "produces"
+  TEST_CASES ||--o{ DEFECTS : "reveals"
+  TEST_RUNS ||--o{ DEFECTS : "detected in"
+  PROJECTS ||--o{ DEFECTS : tracks
+  USERS ||--o{ DEFECTS : "reports / is assigned"
+  DEFECTS ||--o{ DEFECT_HISTORY : "audit trail"
+  DEFECTS ||--o{ DEFECT_COMMENTS : discussion
+  USERS ||--o{ NOTIFICATIONS : receives
+  USERS ||--o{ AUDIT_LOG : performs
+  USERS { int id PK
+    string emp_code UK
+    string email UK
+    string role
+    int department_id FK
+    string password_hash
+    int active }
+  PROJECTS { int id PK
+    string key UK
+    string name
+    string base_url
+    string source_dataset
+    string source_url
+    int owner_id FK }
+  TEST_CASES { int id PK
+    int project_id FK
+    int suite_id FK
+    int requirement_id FK
+    string code
+    string method
+    string endpoint
+    json assertions
+    int automated }
+  TEST_RUNS { int id PK
+    int project_id FK
+    string code
+    string status
+    int total
+    int passed
+    int failed }
+  TEST_RESULTS { int id PK
+    int run_id FK
+    int test_case_id FK
+    string status
+    int attempts
+    int flaky
+    int defect_id }
+  DEFECTS { int id PK
+    int project_id FK
+    string code
+    string external_ref
+    string external_url
+    string severity
+    string status
+    string source
+    int test_case_id FK
+    int assignee_id FK
+    int occurrences
+    int reopen_count
+    string sla_due }
