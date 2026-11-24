@@ -1,0 +1,141 @@
+# LOCAL SIMULATION - local bare repos stand in for GitHub (origin / upstream / fork)
+
+## 01. Create the repository and first commit
+$ cd ~/git-lab
+$ mkdir branch-demo
+$ cd ~/git-lab/branch-demo
+$ git init
+Initialized empty Git repository in ~/git-lab/branch-demo/.git/
+$ git add welcome.txt && git commit -m "Initial welcome file"
+[main (root-commit) 28b7bf2] Initial welcome file
+ 1 file changed, 3 insertions(+)
+ create mode 100644 welcome.txt
+$ git branch
+* main
+
+## 02. Create two branches that change the SAME line
+$ cd ~/git-lab/branch-demo
+$ git switch -c feature-dark
+Switched to a new branch 'feature-dark'
+# edit welcome.txt: change the Theme line to 'dark'
+$ cat welcome.txt
+Welcome to Git Lab
+Theme: dark
+Version: 1.0
+$ git commit -am "Switch theme to dark"
+[feature-dark e1e7117] Switch theme to dark
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ git switch main
+Switched to branch 'main'
+$ git switch -c feature-blue
+Switched to a new branch 'feature-blue'
+# edit welcome.txt: change the Theme line to 'blue'
+$ cat welcome.txt
+Welcome to Git Lab
+Theme: blue
+Version: 1.0
+$ git commit -am "Switch theme to blue"
+[feature-blue a69bf88] Switch theme to blue
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ git switch main
+Switched to branch 'main'
+$ git branch
+  feature-blue
+  feature-dark
+* main
+$ git log --oneline --graph --all
+* a69bf88 Switch theme to blue
+| * e1e7117 Switch theme to dark
+|/
+* 28b7bf2 Initial welcome file
+
+## 03. Merge without conflict (fast-forward)
+$ cd ~/git-lab/branch-demo
+$ git merge feature-dark
+Updating 28b7bf2..e1e7117
+Fast-forward
+ welcome.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ cat welcome.txt
+Welcome to Git Lab
+Theme: dark
+Version: 1.0
+
+## 04. Merge that causes a conflict
+$ cd ~/git-lab/branch-demo
+$ git merge feature-blue
+Auto-merging welcome.txt
+CONFLICT (content): Merge conflict in welcome.txt
+Automatic merge failed; fix conflicts and then commit the result.
+$ git status
+On branch main
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+	both modified:   welcome.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ cat welcome.txt
+Welcome to Git Lab
+<<<<<<< HEAD
+Theme: dark
+=======
+Theme: blue
+>>>>>>> feature-blue
+Version: 1.0
+
+## 05. Resolve the conflict
+# Open welcome.txt in VS Code, keep the line you want, delete the <<<<<<<, ======= and >>>>>>> marker lines.
+$ cd ~/git-lab/branch-demo
+$ cat welcome.txt
+Welcome to Git Lab
+Theme: dark-blue
+Version: 1.0
+$ git add welcome.txt
+$ git status
+On branch main
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+	modified:   welcome.txt
+$ git commit -m "Merge feature-blue: combine dark and blue theme"
+[main 6123710] Merge feature-blue: combine dark and blue theme
+$ git log --oneline --graph --all
+*   6123710 Merge feature-blue: combine dark and blue theme
+|\
+| * a69bf88 Switch theme to blue
+* | e1e7117 Switch theme to dark
+|/
+* 28b7bf2 Initial welcome file
+
+## 06. Abort a merge you do not want
+# main and feature-red both changed the Theme line again...
+$ cd ~/git-lab/branch-demo
+$ git merge feature-red
+Auto-merging welcome.txt
+CONFLICT (content): Merge conflict in welcome.txt
+Automatic merge failed; fix conflicts and then commit the result.
+$ git merge --abort
+$ git status
+On branch main
+nothing to commit, working tree clean
+
+## 07. Clean up branches and push
+$ cd ~/git-lab/branch-demo
+$ git branch -d feature-dark feature-blue
+Deleted branch feature-dark (was e1e7117).
+Deleted branch feature-blue (was a69bf88).
+$ git branch -D feature-red
+Deleted branch feature-red (was f2131ac).
+$ git remote add origin <repository-url>
+$ git push -u origin main
+branch 'main' set up to track 'origin/main'.
+To ~/git-lab/remote/branch-demo.git
+ * [new branch]      main -> main
+$ git branch -a
+* main
+  remotes/origin/main
