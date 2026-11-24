@@ -1,0 +1,83 @@
+# LOCAL SIMULATION - a local bare repo stands in for GitHub (origin)
+
+## 01. (setup) a repository already exists on 'GitHub'
+
+## 02. Clone the repository
+$ cd ~/git-lab
+$ git clone <repository-url>
+Cloning into 'student-notes'...
+done.
+$ cd ~/git-lab/student-notes
+$ ls -a
+.
+..
+.git
+README.md
+notes.md
+$ git remote -v
+origin	~/git-lab/remote/student-notes.git (fetch)
+origin	~/git-lab/remote/student-notes.git (push)
+$ git log --oneline
+f856bc0 Initial notes
+
+## 03. Edit existing file and add a new file
+$ cd ~/git-lab/student-notes
+$ cat notes.md
+# Notes
+
+- Git tracks changes to files.
+- GitHub hosts repositories online.
+$ echo "...new lines..." >> notes.md   # or edit in VS Code
+$ ls
+README.md
+notes.md
+todo.txt
+
+## 04. Review the changes
+$ cd ~/git-lab/student-notes
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   notes.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	todo.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git diff
+diff --git a/notes.md b/notes.md
+index 8c353ad..afcb59a 100644
+--- a/notes.md
++++ b/notes.md
+@@ -2,3 +2,7 @@
+
+ - Git tracks changes to files.
+ - GitHub hosts repositories online.
++
++## Added locally
++- git clone copies the full history to my computer.
++- I edited this file in my own editor.
+
+## 05. Stage, commit and push
+$ cd ~/git-lab/student-notes
+$ git add notes.md todo.txt
+$ git commit -m "Update notes and add todo list"
+[main 4a54b77] Update notes and add todo list
+ 2 files changed, 7 insertions(+)
+ create mode 100644 todo.txt
+$ git push origin main
+To ~/git-lab/remote/student-notes.git
+   f856bc0..4a54b77  main -> main
+$ git log --oneline
+4a54b77 Update notes and add todo list
+f856bc0 Initial notes
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
