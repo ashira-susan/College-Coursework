@@ -1,0 +1,108 @@
+# LOCAL SIMULATION - a local bare repo stands in for GitHub (origin)
+
+## 01. (setup) clone the project
+
+## 02. First change: add a file
+$ cd ~/git-lab/commit-demo
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	calculator.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+$ git add calculator.py
+$ git diff --staged
+diff --git a/calculator.py b/calculator.py
+new file mode 100644
+index 0000000..0dd0baf
+--- /dev/null
++++ b/calculator.py
+@@ -0,0 +1,6 @@
++def add(a, b):
++    return a + b
++
++
++if __name__ == "__main__":
++    print(add(2, 3))
+$ git commit -m "Add calculator with add()"
+[main e9a10dd] Add calculator with add()
+ 1 file changed, 6 insertions(+)
+ create mode 100644 calculator.py
+
+## 03. Second change: modify the file
+$ cd ~/git-lab/commit-demo
+$ git diff
+diff --git a/calculator.py b/calculator.py
+index 0dd0baf..811432b 100644
+--- a/calculator.py
++++ b/calculator.py
+@@ -2,5 +2,10 @@ def add(a, b):
+     return a + b
+
+
++def subtract(a, b):
++    return a - b
++
++
+ if __name__ == "__main__":
+     print(add(2, 3))
++    print(subtract(5, 2))
+$ git commit -am "Add subtract()"
+[main ea445f7] Add subtract()
+ 1 file changed, 5 insertions(+)
+
+## 04. Ignore files and add documentation
+$ cd ~/git-lab/commit-demo
+$ echo '*.log' > .gitignore   # ignore log files
+$ git status -s
+?? .gitignore
+?? README.md
+$ git add README.md .gitignore
+$ git commit -m "Add README and .gitignore"
+[main dd19072] Add README and .gitignore
+ 2 files changed, 6 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+
+## 05. Review history before pushing
+$ cd ~/git-lab/commit-demo
+$ git log --oneline
+dd19072 Add README and .gitignore
+ea445f7 Add subtract()
+e9a10dd Add calculator with add()
+90ce477 Initial commit
+$ git show --stat HEAD
+commit dd19072b6c3a95d73080527347186bed9d450c49
+Author: Susan <susan@example.com>
+Date:   Mon Nov 23 10:33:36 2026 +0000
+
+    Add README and .gitignore
+
+ .gitignore | 1 +
+ README.md  | 5 +++++
+ 2 files changed, 6 insertions(+)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+## 06. Push to the remote
+$ cd ~/git-lab/commit-demo
+$ git push origin main
+To ~/git-lab/remote/commit-demo.git
+   90ce477..dd19072  main -> main
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+$ git log origin/main --oneline
+dd19072 Add README and .gitignore
+ea445f7 Add subtract()
+e9a10dd Add calculator with add()
+90ce477 Initial commit
